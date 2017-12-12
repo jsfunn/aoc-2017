@@ -14,6 +14,7 @@ function solve() {
     var columns = [];
     var num_of_nums;
     var numbers = [];
+    var sortedArray;
     var num_of_remainders;
     var remainders = [];
     var min;
@@ -26,6 +27,8 @@ function solve() {
             var number = parseInt(columns[j]);
             numbers.push(number);
         }
+        numbers.sort(function (a, b) { return a < b ? 1 : a > b ? -1 : 0; });
+        console.log('Sorted numbers: ' + numbers);
         num_of_columns = columns.length;
         num_of_nums = numbers.length;
         repeatLoop: for (var k = 0; k < num_of_nums; k++) {
@@ -34,9 +37,10 @@ function solve() {
                 remainder = max / min;
                 remainders.push(remainder);
                 console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder);
+                numbers = [];
                 break;
             }
-            else if (k === num_of_nums) {
+            else {
                 numbers.splice(0, 1);
                 continue repeatLoop;
             }

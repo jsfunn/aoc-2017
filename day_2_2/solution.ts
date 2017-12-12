@@ -23,6 +23,8 @@ if (!input.length) {
     let num_of_nums: number
     let numbers: Array<number> = []
 
+    let sortedArray: Array<number>
+
     let num_of_remainders: number
     let remainders: Array<number> = []
 
@@ -44,6 +46,9 @@ if (!input.length) {
         numbers.push(number)
       }
 
+      numbers.sort((a, b) => a < b ? 1 : a > b ? -1 : 0 )
+      console.log('Sorted numbers: ' + numbers)
+
       num_of_columns = columns.length
       num_of_nums = numbers.length
 
@@ -52,17 +57,19 @@ if (!input.length) {
 
           if (numbers[0]%numbers[k+1]===0) {
 
-            numbers[0]<numbers[k+1] ? ( max = numbers[k+1], min = numbers[0] ) : ( max = numbers[0], min = numbers[k+1]);
+            numbers[0]<numbers[k+1] ? ( max = numbers[k+1], min = numbers[0] ) : ( max = numbers[0], min = numbers[k+1])
 
-            remainder = max/min;
+            remainder = max/min
 
             remainders.push(remainder)
 
             console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder)
 
+            numbers = []
+
             break;
 
-          } else if (k===num_of_nums) {
+          } else {
             numbers.splice(0,1)
             continue repeatLoop
           }
