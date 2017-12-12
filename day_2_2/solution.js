@@ -1,28 +1,49 @@
 var fs = require('fs');
-var input = fs.readFileSync('input.txt', 'utf8');
-// var input = '5\t1\t9\t5\n7\t5\t3\n2\t4\t6\t8' //checksum = 18
+// var input = fs.readFileSync('input.txt','utf8');
+var input = '5\t9\t2\t8\n9\t4\t7\t3\n3\t8\t6\t5'; //checksum = 18
 if (typeof input === 'undefined') {
     throw new Error('Invalid input: no input provided.');
 }
 if (!input.length) {
     throw new Error('Invalid input: empty string.');
 }
-var rows = input.split('\n');
-var diffs = [];
-var sum = 0;
-for (var a = 0; a < rows.length; a++) {
-    var cells = [];
-    var values = [];
-    cells = rows[a].split('\t');
-    for (var b = 0; b < cells.length; b++) {
-        values.push(parseInt(cells[b]));
+function solve() {
+    var rows = input.split('\n');
+    var num_of_rows = rows.length;
+    var num_of_columns;
+    var columns = [];
+    var num_of_nums;
+    var numbers = [];
+    var num_of_remainders;
+    var remainders = [];
+    var sum = 0;
+    for (var i = 0; i < num_of_rows; i++) {
+        columns = rows[i].split('\t');
+        for (var j = 0; j < num_of_columns; j++) {
+            var number = parseInt(columns[j]);
+            numbers.push(number);
+        }
+        num_of_columns = columns.length;
+        num_of_nums = numbers.length;
+        repeatLoop: for (var k = 0; k < num_of_nums; k++) {
+            if (numbers[0] % numbers[k + 1] === 0) {
+                var max = Math.max.apply(Math, [numbers[0], numbers[k + 1]]);
+                var min = Math.min.apply(Math, [numbers[0], numbers[k + 1]]);
+                var remainder = max / min;
+                console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder);
+                remainders.push(remainder);
+                break;
+            }
+            else if (k === num_of_nums) {
+                numbers.splice(0, 1);
+                continue repeatLoop;
+            }
+        }
     }
-    var max = Math.max.apply(Math, values);
-    var min = Math.min.apply(Math, values);
-    var diff = max - min;
-    diffs.push(diff);
+    num_of_remainders = remainders.length;
+    for (var l = 0; l < num_of_remainders; l++) {
+        sum += remainders[l];
+    }
+    console.log('sum: ' + sum);
 }
-for (var i = 0; i < diffs.length; i++) {
-    sum += diffs[i];
-}
-console.log(sum);
+solve();
