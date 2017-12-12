@@ -26,6 +26,11 @@ if (!input.length) {
     let num_of_remainders: number
     let remainders: Array<number> = []
 
+    let min: number;
+    let max: number;
+
+    let remainder: number; 
+
     let sum: number = 0
 
     for (let i=0; i<num_of_rows; i++) {
@@ -47,14 +52,13 @@ if (!input.length) {
 
           if (numbers[0]%numbers[k+1]===0) {
 
-            let max = Math.max.apply(Math, [numbers[0], numbers[k+1]])
-            let min = Math.min.apply(Math, [numbers[0], numbers[k+1]])
+            numbers[0]<numbers[k+1] ? ( max = numbers[k+1], min = numbers[0] ) : ( max = numbers[0], min = numbers[k+1]);
 
-            let remainder = max/min;
-
-            console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder)
+            remainder = max/min;
 
             remainders.push(remainder)
+
+            console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder)
 
             break;
 

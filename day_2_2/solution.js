@@ -16,6 +16,9 @@ function solve() {
     var numbers = [];
     var num_of_remainders;
     var remainders = [];
+    var min;
+    var max;
+    var remainder;
     var sum = 0;
     for (var i = 0; i < num_of_rows; i++) {
         columns = rows[i].split('\t');
@@ -27,11 +30,10 @@ function solve() {
         num_of_nums = numbers.length;
         repeatLoop: for (var k = 0; k < num_of_nums; k++) {
             if (numbers[0] % numbers[k + 1] === 0) {
-                var max = Math.max.apply(Math, [numbers[0], numbers[k + 1]]);
-                var min = Math.min.apply(Math, [numbers[0], numbers[k + 1]]);
-                var remainder = max / min;
-                console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder);
+                numbers[0] < numbers[k + 1] ? (max = numbers[k + 1], min = numbers[0]) : (max = numbers[0], min = numbers[k + 1]);
+                remainder = max / min;
                 remainders.push(remainder);
+                console.log('Row: ' + i + '| min: ' + min + '| max: ' + max + '| remainder: ' + remainder);
                 break;
             }
             else if (k === num_of_nums) {
